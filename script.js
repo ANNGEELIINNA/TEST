@@ -17,7 +17,6 @@ fetch('questions.json')
 
 // Показать вопрос и варианты ответов
 function showQuestion(question) {
-    currentQuestiob = 0;
     questionContainer.textContent = question.question;
 
     // Очистить предыдущие варианты ответов и картинки
@@ -86,6 +85,7 @@ function checkOrder(userOrder, correctOrder) {
 
 // Обработчик события для кнопки "Submit"
 submitButton.addEventListener('click', () => {
+    currentQuestiob = 0;
     // Получаем значения из полей ввода порядка действий и т.д.
     const inputFields = document.querySelectorAll('.input-field');
     const userOrder = [];
