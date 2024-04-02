@@ -85,8 +85,6 @@ function checkOrder(userOrder, correctOrder) {
 
 // Обработчик события для кнопки "Submit"
 submitButton.addEventListener('click', () => {
-    submitButton.disabled = true;
-    currentQuestiob = 0;
     // Получаем значения из полей ввода порядка действий и т.д.
     const inputFields = document.querySelectorAll('.input-field');
     const userOrder = [];
