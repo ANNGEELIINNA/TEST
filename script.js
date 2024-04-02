@@ -17,6 +17,7 @@ fetch('questions.json')
 
 // Показать вопрос и варианты ответов
 function showQuestion(question) {
+    currentQuestiob = 0;
     questionContainer.textContent = question.question;
 
     // Очистить предыдущие варианты ответов и картинки
