@@ -85,6 +85,7 @@ function checkOrder(userOrder, correctOrder) {
 
 // Обработчик события для кнопки "Submit"
 submitButton.addEventListener('click', () => {
+    submitButton.disabled = true;
     // Получаем значения из полей ввода порядка действий и т.д.
     const inputFields = document.querySelectorAll('.input-field');
     const userOrder = [];
@@ -142,6 +143,7 @@ submitButton.addEventListener('click', () => {
                     currentQuestion++;
                     if (currentQuestion < questionsData.questions.length) {
                         showQuestion(questionsData.questions[currentQuestion]);
+                        submitButton.disabled = false;
                     } else {
                         showResult();
                     }
@@ -227,4 +229,5 @@ function showResult() {
     submitButton.style.display = 'none';
 
     resultContainer.textContent = `Вы ответили правильно на ${score} из ${questionsData.questions.length} вопросов.`;
+    submitButton.disabled = false;
 }
