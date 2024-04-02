@@ -7,6 +7,7 @@ body {
 #question {
     font-size: 1.2em;
     margin-bottom: 20px;
+    color:red;
 }
 
 #options {
@@ -38,7 +39,7 @@ body {
 }
 
 img {
-    max-width: 100%;
+    max-width: 40%;
     height: auto;
     margin-bottom: 10px;
 }
