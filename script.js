@@ -120,6 +120,9 @@ submitButton.addEventListener('click', () => {
                         showResult();
                     }
                 }, 3000); // 3000 миллисекунд (3 секунды)
+            } else {
+                moveToNearestCheckpoint();
+                submitButton.disabled = false;
             }
         } else if (currentQuestionData.correct) {
             // Проверяем варианты ответов
