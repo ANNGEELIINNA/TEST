@@ -1,42 +1,3 @@
-// После загрузки контента
-document.addEventListener("DOMContentLoaded", function () {
-    // Показываем первый слайд
-    showSlide("startSlide1");
-
-    // Ждем определенное время перед показом второго слайда
-    setTimeout(function () {
-        showSlide("startSlide2");
-    }, 5000); // Время в миллисекундах (здесь 5000 миллисекунд или 5 секунд)
-
-    // Ждем определенное время перед началом теста
-    setTimeout(function () {
-        startQuiz();
-    }, 5000); // Время в миллисекундах (здесь 10000 миллисекунд или 10 секунд)
-});
-
-function showSlide(slideId) {
-    // Скрыть все слайды
-    var slides = document.querySelectorAll(".slide");
-    slides.forEach(function (slide) {
-        slide.style.display = "none";
-    });
-
-    // Показать заданный слайд
-    document.getElementById(slideId).style.display = "block";
-}
-
-
-function startQuiz(){
-    setTimeout(function(){
-        var slides = document.querySelectorAll(".slide");
-    slides.forEach(function (slide) {
-        slide.style.display = "none";
-    });
-        document.getElementById("qustionContainer").style.display = "block";
-        showQuestion(questionsData.questions[currentQuestion]);
-    }, 5000);
-}
-const quest = document.getElementById('qustionContainer');
 const questionContainer = document.getElementById('question');
 const optionsContainer = document.getElementById('options');
 const submitButton = document.getElementById('submitBtn');
@@ -55,31 +16,17 @@ fetch('questions.json')
     });
 
 // Показать вопрос и варианты ответов
-
-
-
 function showQuestion(question) {
     questionContainer.textContent = question.question;
 
     // Очистить предыдущие варианты ответов и картинки
     optionsContainer.innerHTML = '';
 
-    if (question.backgroundImage) {
-        quest.style.backgroundImage = `url(${question.backgroundImage})`;
-        quest.classList.add('question-with-background');
-    } else {
-        // Убираем фоновое изображение, если его нет
-        quest.style.backgroundImage = 'none';
-        quest.classList.remove('question-with-background');
-    }
-
-    // Если есть изображение для вопроса, добавляем его
-    if (question.image) {
-        const image = document.createElement('img');
-        image.src = question.image;
-        image.alt = "Question Image";
-        optionsContainer.appendChild(image);
-    }
+    // Добавить изображение
+    const image = document.createElement('img');
+    image.src = question.image;
+    image.alt = "Question Image";
+    optionsContainer.appendChild(image);
 
     if (question.orderedActions) {
         // Добавить поля ввода порядка для каждого действия
@@ -138,7 +85,6 @@ function checkOrder(userOrder, correctOrder) {
 
 // Обработчик события для кнопки "Submit"
 submitButton.addEventListener('click', () => {
-    submitButton.disabled = true;
     // Получаем значения из полей ввода порядка действий и т.д.
     const inputFields = document.querySelectorAll('.input-field');
     const userOrder = [];
@@ -169,14 +115,10 @@ submitButton.addEventListener('click', () => {
                     currentQuestion++;
                     if (currentQuestion < questionsData.questions.length) {
                         showQuestion(questionsData.questions[currentQuestion]);
-                        submitButton.disabled = false;
                     } else {
                         showResult();
                     }
                 }, 3000); // 3000 миллисекунд (3 секунды)
-            } else {
-                moveToNearestCheckpoint();
-                submitButton.disabled = false;
             }
         } else if (currentQuestionData.correct) {
             // Проверяем варианты ответов
@@ -200,14 +142,12 @@ submitButton.addEventListener('click', () => {
                     currentQuestion++;
                     if (currentQuestion < questionsData.questions.length) {
                         showQuestion(questionsData.questions[currentQuestion]);
-                        submitButton.disabled = false;
                     } else {
                         showResult();
                     }
                 }, 3000); // 3000 миллисекунд (3 секунды)
             } else {
                 moveToNearestCheckpoint();
-                submitButton.disabled = false;
             }
         }
     } else {
@@ -264,7 +204,7 @@ function findNearestCheckpoint() {
 function moveToNearestCheckpoint() {
     // Находим индекс текущего вопроса
     let currentIndex = currentQuestion;
-
+    
     // Перебираем вопросы в обратном порядке, начиная с текущего вопроса
     for (let i = currentIndex; i >= 0; i--) {
         if (questionsData.questions[i].checkpoint) {
@@ -286,6 +226,5 @@ function showResult() {
     optionsContainer.style.display = 'none';
     submitButton.style.display = 'none';
 
-    resultContainer.textContent = `Вы ответили правильно на ${score} из ${questionsData.questions.length} вопросов.`;
-    submitButton.disabled = false;
+    resultContainer.textContent = `Молодец! Ты дошел до конца`;
 }
