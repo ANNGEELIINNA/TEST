@@ -3,6 +3,16 @@ const optionsContainer = document.getElementById('options');
 const submitButton = document.getElementById('submitBtn');
 const resultContainer = document.getElementById('result');
 
+// Функция для отображения блока
+function showBlock(blockId) {
+    document.getElementById(blockId).style.display = 'block';
+}
+
+// Функция для скрытия блока
+function hideBlock(blockId) {
+    document.getElementById(blockId).style.display = 'none';
+}
+
 let currentQuestion = 0;
 let score = 0;
 let questionsData = null;
@@ -14,6 +24,21 @@ fetch('questions.json')
         questionsData = data;
         showQuestion(questionsData.questions[currentQuestion]);
     });
+
+    hideBlock('startSlide2');
+    hideBlock('qustionContainer');
+
+    showBlock('startSlide1');
+
+    setTimeout(() => {
+        hideBlock('startSlide1');
+        showBlock('startSlide2');
+    }, 5000);
+
+    setTimeout(() => {
+        hideBlock('startSlide2');
+        showBlock('qustionContainer');
+    }, 10000);
 
 // Показать вопрос и варианты ответов
 function showQuestion(question) {
@@ -204,7 +229,7 @@ function findNearestCheckpoint() {
 function moveToNearestCheckpoint() {
     // Находим индекс текущего вопроса
     let currentIndex = currentQuestion;
-    
+
     // Перебираем вопросы в обратном порядке, начиная с текущего вопроса
     for (let i = currentIndex; i >= 0; i--) {
         if (questionsData.questions[i].checkpoint) {
